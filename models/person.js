@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
 const url = process.env.MONGO_URL
-console.log('connecting to: ', url)
+//console.log('connecting to: ', url)
 
 mongoose.connect(url)
     .then(result => {
@@ -21,8 +21,13 @@ const personSchema = new mongoose.Schema({
     },
     number: {
         type: String,
-        minLength: 9,
-        required: true
+        validate: {
+            validator: function (v) {
+                return /^\d{2,3}-\d{6,}$/.test(v)
+            },
+            message: props => `${props.value} is not a valid phone number!`
+        },
+        required: [true, 'User phone number required']
     }
 })
 

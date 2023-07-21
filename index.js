@@ -101,7 +101,7 @@ app.delete('/api/persons/:id', (request, response) => {
         }).catch(error => next(error))
 })
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
     const { name, number } = request.body
 
     Person.findByIdAndUpdate(
